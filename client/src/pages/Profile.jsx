@@ -94,7 +94,7 @@ export default function Profile() {
           id='password'
           className='border p-3 rounded-lg'
         />
-        <button className='bg-slate-800 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'>
+        <button className='bg-orange-800 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'>
           update
         </button>
       </form>
