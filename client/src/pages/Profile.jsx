@@ -1,8 +1,21 @@
 import { useSelector } from 'react-redux';
 import { useRef, useState, useEffect } from 'react';
-import {getDownloadURL,getStorage,ref,uploadBytesResumable,} from 'firebase/storage';
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from 'firebase/storage';
 import { app } from '../firebase';
-import {updateUserStart,updateUserSuccess,updateUserFailure, deleteUserFailure, deleteteUserStart, deleteUserSuccess,} from '../redux/user/userSlice';
+import {
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailure,
+  deleteUserFailure,
+  deleteUserStart,
+  deleteUserSuccess,
+  signOutUserStart,
+} from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
 export default function Profile() {
   const fileRef = useRef(null);
@@ -13,6 +26,8 @@ export default function Profile() {
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const dispatch = useDispatch();
+
+
 
   useEffect(() => {
     if (file) {
@@ -72,20 +87,36 @@ export default function Profile() {
     }
   };
 
-  const handleDeleteUser=async()=>{
+  const handleDeleteUser = async () => {
     try {
-      dispatch(deleteteUserStart());
+      dispatch(deleteUserStart());
       const res = await fetch(`/api/user/delete/${currentUser._id}`, {
         method: 'DELETE',
       });
-      const data=await res.json();
-      if(data.success===false){
+      const data = await res.json();
+      if (data.success === false) {
         dispatch(deleteUserFailure(data.message));
         return;
       }
       dispatch(deleteUserSuccess(data));
     } catch (error) {
-      dispatch(deleteUserFailure(error.message))
+      dispatch(deleteUserFailure(error.message));
+    }
+  };
+
+  const handleSignOut = async () => {
+
+    try {
+      dispatch(signOutUserStart())
+      const res = await fetch('/api/auth/signout');
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(data.message));
     }
   }
   return (
@@ -107,13 +138,13 @@ export default function Profile() {
         />
         <p className='text-sm self-center'>
           {fileUploadError ? (
-            <span className='text-red-700'>
+            <span className='text-red-800'>
               Error Image upload (image must be less than 2 mb)
             </span>
           ) : filePerc > 0 && filePerc < 100 ? (
             <span className='text-slate-700'>{`Uploading ${filePerc}%`}</span>
           ) : filePerc === 100 ? (
-            <span className='text-green-700'>Image successfully uploaded!</span>
+            <span className='text-green-800'>Image successfully uploaded!</span>
           ) : (
             ''
           )}
@@ -143,14 +174,19 @@ export default function Profile() {
         />
         <button
           disabled={loading}
-          className='bg-orange-900 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'
+          className='bg-orange-800 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'
         >
           {loading ? 'Loading...' : 'Update'}
         </button>
       </form>
       <div className='flex justify-between mt-5'>
-        <span onClick={handleDeleteUser}className='text-red-800 cursor-pointer'>Delete account</span>
-        <span className='text-red-800 cursor-pointer'>Sign out</span>
+        <span
+          onClick={handleDeleteUser}
+          className='text-red-800 cursor-pointer'
+        >
+          Delete account
+        </span>
+        <span onClick={handleSignOut} className='text-red-700 cursor-pointer'>Sign out</span>
       </div>
 
       <p className='text-red-800 mt-5'>{error ? error : ''}</p>
