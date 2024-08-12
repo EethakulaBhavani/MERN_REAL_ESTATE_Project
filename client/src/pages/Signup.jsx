@@ -55,7 +55,7 @@ setFormData(
         className='border p-3 rounded-lg 'id='email'onChange={handleChange} />
         <input type="password" placeholder='password'
         className='border p-3 rounded-lg 'id='password' onChange={handleChange}/>
-        <button disabled={loading} className='bg-orange-900 text-white p-3 
+        <button disabled={loading} className='bg-lime-700 text-white p-3 
         rounded-lg uppercase hover:opacity-90 disabled:opacity-80'>
           {loading?'Loading.....':'Sign Up'}
         </button>
