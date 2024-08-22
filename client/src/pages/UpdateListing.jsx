@@ -232,7 +232,7 @@ useEffect(()=>{
               </div>
             ))
           }
-          <button disabled={loading||uploading} className='rounded-lg uppercase text-white p-3 bg-orange-800 hover:opacity-90 disabled:opacity-80'>{loading?'Creating':'Update my list'}</button>
+          <button disabled={loading||uploading} className='rounded-lg uppercase text-white p-3 bg-orange-800 hover:opacity-90 disabled:opacity-80'>{loading?'Updating':'Update my list'}</button>
           {error&&<p className='text-red-800 text-sm'>{error}</p>}
         </div>
       </form>
