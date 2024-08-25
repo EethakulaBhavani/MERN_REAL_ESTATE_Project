@@ -239,7 +239,7 @@ export default function Profile() {
       <div className='flex flex-col gap-4'>
         <h1 className='uppercase font-semibold mt-7 text-center text-2xl'>My Lists</h1>
        {showLists.map((listing)=>(
-        <div key={listing._id} className='border rounnded-lg p-3 gap-4 flex justify-between items-center'>
+        <div key={listing._id} className='border border-red-800 rounnded-lg p-3 gap-4 flex justify-between items-center'>
           <Link to={`/listing/${listing._id}`}>
           <img src={listing.imageUrls[0]} alt="list cover" className='h-16 w-16 object-contain'/>
 
@@ -248,9 +248,9 @@ export default function Profile() {
           <p>{listing.name}</p>
           </Link>
           <div className='flex flex-col item-center'>
-            <button onClick={()=>handleDeleteListing(listing._id)} className='text-red-700 uppercase'>Delete</button>
+            <button onClick={()=>handleDeleteListing(listing._id)} className='text-red-700 uppercase hover:opacity-80'>Delete</button>
             <Link to={`/update-listing/${listing._id}`}>
-            <button className='text-green-700 uppercase'>Edit</button>
+            <button className='text-green-700 hover:opacity-80 uppercase'>Edit</button>
             </Link>
           </div>
         </div>

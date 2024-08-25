@@ -1,5 +1,6 @@
 import  { useEffect, useState } from 'react';
 import {useNavigate} from 'react-router-dom'
+import Listingitem from '../components/Listingitem';
 
 export default function Search() {
     const navigate=useNavigate();
@@ -14,7 +15,8 @@ export default function Search() {
 
     });
     const [loading,setLoading]=useState(false);
-    const [listing,setListings]=useState([]);
+    const [listings,setListings]=useState([]);
+    console.log(listings);
     useEffect(()=>{
         const urlParams=new URLSearchParams(location.search);
         const searchTermFromUrl =urlParams.get('searchTerm');
@@ -44,7 +46,7 @@ export default function Search() {
         const fetchListings=async()=>{
             setLoading(true); 
             const searchQuery=urlParams.toString();
-            const res=await fetch(`/api/listing/get-listings?${searchQuery}`);
+            const res=await fetch(`/api/listing/get?${searchQuery}`);
             const data=await res.json();
             setListings(data);
             setLoading(false);
@@ -163,11 +165,26 @@ export default function Search() {
                         <option value='createdAt_desc'>Latest</option>
                     </select>
                 </div>
-                <button className='rounded-lg p-3 bg-red-900 text-white hover:opacity-85 uppercase font-semibold'>Search</button>
+                <button className='rounded-lg p-3 bg-red-900 text-white hover:scale-105 transition-scale duration-300 uppercase font-semibold'>Search</button>
             </form>
         </div>
-        <div className="">
-            <h1 className='text-3xl font-semibold p-3 border-b text-red-900 mt-5 '>Here are your lists</h1>
+        <div className="flex-1">
+            <h1 className='text-3xl font-semibold p-3 border-b text-red-900 mt-5 '>
+                Here are your lists
+            </h1>
+            <div className="p-7 flex flex-wrap gap-4">
+                {!loading && listings.length ===0 &&(
+                    <p className='text-xl text-center text-red-900'>Oops!No listing found</p>
+                )
+                }
+                {loading &&(
+                    <p className='text-xl text-red-900 text-center w-full'>Loading...</p>
+                )}
+
+                {
+                    !loading && listings && listings.map((listing)=>
+                        <Listingitem key={listing._id} listing={listing}/>)}
+            </div>
         </div>
     </div>
   )
