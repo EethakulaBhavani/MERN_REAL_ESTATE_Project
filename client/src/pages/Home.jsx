@@ -75,8 +75,8 @@ export default function Home() {
       <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10"></div>
       {
         offerListings && offerListings.length>0 &&(
-          <div className="">
-            <div className="my-3">
+          <div className="ml-7">
+            <div className="my-3 ">
               <h2 className='text-2xl font-semibold text-red-600'>Recent Offers</h2>
               <Link className='text-sm text-red-950 hover:underline font-semibold' to={'/search?offer=true'}>
               Show more offers..
@@ -94,7 +94,7 @@ export default function Home() {
       }
       {
         rentListings && rentListings.length>0 &&(
-          <div className="">
+          <div className="ml-7">
             <div className="my-3">
               <h2 className='text-2xl font-semibold text-red-600'>Recent Places for Rents</h2>
               <Link className='text-sm text-red-950 hover:underline font-semibold' to={'/search?type=rent'}>
@@ -113,7 +113,7 @@ export default function Home() {
       }
       {
         saleListings && saleListings.length>0 &&(
-          <div className="">
+          <div className="ml-7">
             <div className="my-3">
               <h2 className='text-2xl font-semibold text-red-600'>Recent Sales</h2>
               <Link className='text-sm text-red-950 hover:underline font-semibold' to={'/search?type=sale'}>
